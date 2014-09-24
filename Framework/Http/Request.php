@@ -82,6 +82,7 @@ class Request {
     }
 
     public function getBaseUrl() {
-        return 'http://' . $this->server->getString('HTTP_HOST');
+        $scriptName = $this->server->getString('SCRIPT_NAME');
+        return 'http://' . $this->server->getString('HTTP_HOST') . dirname($scriptName) . '/';
     }
 }

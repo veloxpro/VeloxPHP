@@ -65,7 +65,7 @@ class HttpRoute {
         return $this->matches;
     }
 
-    public function generateUrl($params = []) {
+    public function generateUrl(Request $request, $params = []) {
         $queryParams = [];
         $routeParams = [];
 
@@ -115,7 +115,7 @@ class HttpRoute {
             $u .= '?'.implode('&', $qs);
         }
 
-        return $u;
+        return $request->getBaseUrl() . ltrim($u, '/');
     }
 
 
@@ -151,7 +151,14 @@ class HttpRoute {
 
         $regexp = $this->getRegexp();
         $matches = [];
-        if (preg_match($regexp, $request->getRequestUri(false), $matches)) {
+        $uri = $request->getRequestUri(false);
+        $base = $request->server->getString('REDIRECT_BASE');
+        if (strlen($base) < 1)
+            $uri = '/';
+        else
+            $uri = '/' . substr($uri, strlen($base));
+
+        if (preg_match($regexp, $uri, $matches)) {
             $this->setMatches($matches);
             return true;
         }

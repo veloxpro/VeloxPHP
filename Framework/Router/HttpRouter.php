@@ -60,6 +60,7 @@ class HttpRouter {
     public function generateUrl($name, $params = []) {
         if (!isset($this->routes[$name]))
             throw new RouteNotFoundException(sprintf('Named route "%s" doesn\'t exists', $name));
-        return $this->routes[$name]->generateUrl($params);
+        $request = Registry::get('Velox.Http.Request');
+        return $this->routes[$name]->generateUrl($request, $params);
     }
 }
