@@ -110,8 +110,14 @@ class HttpRoute {
 
         if (count($queryParams) > 0) {
             $qs = [];
-            foreach ($queryParams as $k => $v)
-                $qs[] = $k.'='.$v;
+            foreach ($queryParams as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $p)
+                        $qs[] = $k.'[]='.urlencode($p);
+                } else {
+                    $qs[] = $k.'='.urlencode($v);
+                }
+            }
             $u .= '?'.implode('&', $qs);
         }
 

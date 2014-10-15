@@ -58,4 +58,8 @@ class ParameterBag {
     public function getAlnum($key, $default = '') {
         return preg_replace('/[^[:alnum:]]/', '', $this->get($key, ''));
     }
+
+    public function getParameters() {
+        return $this->parameters;
+    }
 }
