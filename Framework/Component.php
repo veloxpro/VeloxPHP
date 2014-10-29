@@ -40,7 +40,7 @@ class Component extends BaseComponent {
             'MainDB' => new Service(function() {
                     // load settings
                     $driver = new Driver();
-                    $conf = include('app/config/db.config.php');
+                    $conf = include('config/db.config.php');
                     $driver->connect($conf['host'], $conf['user'], $conf['password'], $conf['database']);
                     return $driver;
                 }),

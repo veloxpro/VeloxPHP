@@ -368,20 +368,20 @@ class Repository {
     }
 
     public function persist($entity, $broadcastEvents = true) {
-        $pk = $this->getPk();
+        /*$pk = $this->getPk();
         if (is_null($pk))
             throw new \LogicException(sprintf('Trying to persist entity "%s" with no Primary Key defined', $this->getEntityClass()));
 
         $pkVal = $entity->{'get'.ucfirst($pk->getPropName())}();
         if (is_null($pkVal)) {
             $this->insert($entity, $broadcastEvents);
-        } else {
+        } else {*/
             try {
-                $this->update($entity, $broadcastEvents);
-            } catch (DuplicateKeyException $ex) {
                 $this->insert($entity, $broadcastEvents);
+            } catch (DuplicateKeyException $ex) {
+                $this->update($entity, $broadcastEvents);
             }
-        }
+        //}
     }
 
     public function getSqlByPropName($propName) {
