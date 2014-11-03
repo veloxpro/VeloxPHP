@@ -103,6 +103,10 @@ class Template {
         return Registry::get('Velox.Http.Request')->getRequestUri();
     }
 
+    public function url() {
+        return 'http://' . Registry::get('Velox.Http.Request')->server->getString('HTTP_HOST') . $this->uri();
+    }
+
     public function route($name, array $params = []) {
         return Registry::get('Velox.HttpRouter')->generateUrl($name, $params);
     }

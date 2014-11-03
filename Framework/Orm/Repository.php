@@ -147,7 +147,7 @@ class Repository {
         $groupBy = (isset($config['groupBy']) && $config['groupBy'] != '') ? [$config['groupBy']] : [];
         $startCount = isset($config['startCount']) ? $config['startCount'] : null;
         $limitCount = isset($config['limitCount']) ? $config['limitCount'] : null;
-        $from = [$this->getTableName()];
+        $from = ['`' . $this->getTableName() . '`'];
 
         foreach ($this->joins as $j)
             $from[] = $j->getSql();
@@ -219,7 +219,7 @@ class Repository {
         $pkVal = $entity->$getter();
         $whereSql = '[$'.$pk->getPropName().']=[escape('.$pkVal.')]';
 
-        $q = sprintf('DELETE FROM %s WHERE %s', $this->getTableName(), $whereSql);
+        $q = sprintf('DELETE FROM `%s` WHERE %s', $this->getTableName(), $whereSql);
         $q = $this->prepare($q);
 
         if ($this->dumpQueryOnce) {
@@ -293,7 +293,7 @@ class Repository {
                 $valuesSql[] = $this->dbDriver->escape($a[$propName]);
         }
 
-        $q = sprintf('INSERT INTO %s (%s) VALUES (%s)',
+        $q = sprintf('INSERT INTO `%s` (%s) VALUES (%s)',
             $this->getTableName(), implode(', ', $fieldsSql), implode(', ', $valuesSql));
         $q = $this->prepare($q);
 
@@ -348,7 +348,7 @@ class Repository {
                 $assignments[] = $f->getSql($this->getTableName()).'='.$this->dbDriver->escape($a[$propName]);
         }
 
-        $q = sprintf('UPDATE %s SET %s WHERE %s',
+        $q = sprintf('UPDATE `%s` SET %s WHERE %s',
             $this->getTableName(), implode(', ', $assignments),
             $pk->getSql($this->getTableName()).'='.$this->dbDriver->escape($a[$pk->getPropName()]));
         $q = $this->prepare($q);
