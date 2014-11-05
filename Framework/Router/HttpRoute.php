@@ -65,7 +65,7 @@ class HttpRoute {
         return $this->matches;
     }
 
-    public function generateUrl(Request $request, $params = []) {
+    public function generateUrl(Request $request, $params = [], array $ignoreConstraintsFor = []) {
         $queryParams = [];
         $routeParams = [];
 
@@ -81,6 +81,8 @@ class HttpRoute {
 
         $url = $this->url;
         foreach ($routeParams as $key => $val) {
+            if (in_array($key, $ignoreConstraintsFor))
+                continue;
             $regexp = isset($this->requirements[$key]) ? $this->requirements[$key] : $this->defaultVarRegexp;
             $regexp = sprintf('/^%s$/', $regexp);
             if (!preg_match($regexp, $val)) {

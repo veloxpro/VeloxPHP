@@ -107,8 +107,8 @@ class Template {
         return 'http://' . Registry::get('Velox.Http.Request')->server->getString('HTTP_HOST') . $this->uri();
     }
 
-    public function route($name, array $params = []) {
-        return Registry::get('Velox.HttpRouter')->generateUrl($name, $params);
+    public function route($name, array $params = [], array $ignoreConstraintsFor = []) {
+        return Registry::get('Velox.HttpRouter')->generateUrl($name, $params, $ignoreConstraintsFor);
     }
 
     public function service($name) {

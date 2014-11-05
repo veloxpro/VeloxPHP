@@ -63,8 +63,8 @@ class BaseController {
         Registry::get('Velox.Http.Response')->setStatusCode(Response::HTTP_PERMANENTLY_REDIRECT)->setHeader('location', $url);
     }
 
-    public function generateUrl($route, $params = []) {
-        return Registry::get('Velox.HttpRouter')->generateUrl($route, $params);
+    public function generateUrl($route, $params = [], array $ignoreConstraintsFor = []) {
+        return Registry::get('Velox.HttpRouter')->generateUrl($route, $params, $ignoreConstraintsFor);
     }
 
     public function requireAuthenticated() {

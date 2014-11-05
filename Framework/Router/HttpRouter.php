@@ -57,10 +57,10 @@ class HttpRouter {
         $eventManager->broadcast(new Event('Velox.Router.afterRespond', $this));
     }
 
-    public function generateUrl($name, $params = []) {
+    public function generateUrl($name, $params = [], array $ignoreConstraintsFor = []) {
         if (!isset($this->routes[$name]))
             throw new RouteNotFoundException(sprintf('Named route "%s" doesn\'t exists', $name));
         $request = Registry::get('Velox.Http.Request');
-        return $this->routes[$name]->generateUrl($request, $params);
+        return $this->routes[$name]->generateUrl($request, $params, $ignoreConstraintsFor);
     }
 }
