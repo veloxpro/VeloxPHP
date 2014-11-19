@@ -62,4 +62,11 @@ class ParameterBag {
     public function getParameters() {
         return $this->parameters;
     }
+
+    public function getFile($key) {
+        $params = $this->get($key, null);
+        if ($params == null)
+            return null;
+        return new UploadedFile($key, $params);
+    }
 }

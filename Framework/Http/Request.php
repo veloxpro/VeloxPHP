@@ -24,7 +24,7 @@ class Request {
     public $content; // TODO : implement request content abstraction
     public $header; // TODO: implement headers
     public $requestUri;
-    public $method;
+    protected $method;
     /** @var  ParameterBag */
     public $session;
     /** @var  ParameterBag */

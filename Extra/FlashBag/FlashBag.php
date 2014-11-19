@@ -16,6 +16,10 @@ class FlashBag {
         $_SESSION[$this->sessionKey][$namespase][] = $msg;
     }
 
+    public function add($namespace, $msg) {
+        return $this->addMessage($namespace, $msg);
+    }
+
     public function getMessages($namespace) {
         if (!isset($_SESSION[$this->sessionKey][$namespace]))
             return [];
@@ -24,4 +28,8 @@ class FlashBag {
         $_SESSION[$this->sessionKey][$namespace] = [];
         return $messages;
     }
-} 
+
+    public function get($namespace) {
+        return $this->getMessages($namespace);
+    }
+}
