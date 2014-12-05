@@ -31,4 +31,8 @@ class UploadedFile {
     public function getType() {
         return $this->type;
     }
+
+    public function getExt() {
+        return array_pop(explode('.', $this->fileName));
+    }
 }
