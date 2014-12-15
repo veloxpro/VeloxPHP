@@ -1,0 +1,12 @@
+{
+    "name": "veloxpro/VeloxPHP",
+    "description": "Velox Framework",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-0": {
+            "Velox": "src/"
+        }
+    }
+}
