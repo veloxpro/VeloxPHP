@@ -8,7 +8,7 @@ class Enum {
 
     public static function getAll() {
         if (self::$constCacheArray == null)
-            self::$constCacheArray = [];
+            self::$constCacheArray = array();
         $calledClass = get_called_class();
         if (!array_key_exists($calledClass, self::$constCacheArray)) {
             $reflect = new ReflectionClass($calledClass);

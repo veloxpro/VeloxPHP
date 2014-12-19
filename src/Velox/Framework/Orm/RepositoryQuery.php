@@ -3,10 +3,10 @@ namespace Velox\Framework\Orm;
 
 class RepositoryQuery {
     protected $repository;
-    protected $where = [];
-    protected $having = [];
-    protected $orderBy = [];
-    protected $groupBy = [];
+    protected $where = array();
+    protected $having = array();
+    protected $orderBy = array();
+    protected $groupBy = array();
     protected $startCount = null;
     protected $limitCount = null;
 
@@ -54,12 +54,12 @@ class RepositoryQuery {
     }
 
     public function find() {
-        $config = [
+        $config = array(
             'where' => implode(' AND ', array_map(function($v) { return '('.$v.')'; }, $this->where)),
             'having' => implode(' AND ', array_map(function($v) { return '('.$v.')'; }, $this->having)),
             'orderBy' => implode(', ', $this->orderBy),
             'groupBy' => implode(', ', $this->groupBy),
-        ];
+        );
         if (!is_null($this->startCount))
             $config['startCount'] = $this->startCount;
         if (!is_null($this->limitCount))

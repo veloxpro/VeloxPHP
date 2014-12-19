@@ -2,14 +2,14 @@
 namespace Velox\Framework\Kernel;
 
 class ComponentManager {
-    private $components = [];
+    private $components = array();
 
     public function push(BaseComponent $component) {
         $this->components[] = $component;
     }
 
     public function getServices() {
-        $services = [];
+        $services = array();
         foreach ($this->components as $c) {
             $s = $c->getServices();
             if (!is_null($s))
@@ -19,14 +19,14 @@ class ComponentManager {
     }
 
     public function getEventListeners() {
-        $eventListeners = [];
+        $eventListeners = array();
         foreach($this->components as $c)
             $eventListeners = array_merge($eventListeners, $c->getEventListeners());
         return $eventListeners;
     }
 
     public function getRoutes() {
-        $routes = [];
+        $routes = array();
         foreach ($this->components as $c) {
             $r = $c->getRoutes();
             if (!is_null($r))

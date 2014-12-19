@@ -3,7 +3,7 @@ namespace Velox\Security\Authentication\UserProvider;
 
 class FileUserProvider extends AbstractUserProvider {
     protected $path;
-    protected $allUsers = [];
+    protected $allUsers = array();
 
     public function findUserByUsername($username) {
         foreach ($this->allUsers as $id => $params) {
@@ -26,7 +26,7 @@ class FileUserProvider extends AbstractUserProvider {
         if (is_readable($this->path))
             $this->allUsers = include $this->path;
         else
-            $this->allUsers = [];
+            $this->allUsers = array();
         return $this;
     }
 

@@ -26,7 +26,7 @@ class AuthenticationManager {
     protected $sessionKey = 'Velox.Security.UserId';
     protected $rememberTokenName = 'REMEMBER_TOKEN';
     protected $currentUser = null;
-    protected $history = [];
+    protected $history = array();
 
     /*public function __construct() {
         // set current user

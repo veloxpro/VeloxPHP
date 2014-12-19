@@ -39,7 +39,7 @@ class BaseController {
         return strstr($s, 'Controller', true);
     }
 
-    public function render($path, $vars = [], $isRelative = true) {
+    public function render($path, $vars = array(), $isRelative = true) {
         /*if (empty($path)) {
             // TODO: find the canonical path
         }*/
@@ -50,7 +50,7 @@ class BaseController {
         return $this->renderAbsolute($absolutePath, $vars);
     }
 
-    public function renderAbsolute($path, $vars = []) {
+    public function renderAbsolute($path, $vars = array()) {
         $tmpl = new Template($path, $vars);
         return $tmpl->render();
     }
@@ -63,7 +63,7 @@ class BaseController {
         Registry::get('Velox.Http.Response')->setStatusCode(Response::HTTP_PERMANENTLY_REDIRECT)->setHeader('location', $url);
     }
 
-    public function generateUrl($route, $params = [], array $ignoreConstraintsFor = []) {
+    public function generateUrl($route, $params = array(), array $ignoreConstraintsFor = array()) {
         return Registry::get('Velox.HttpRouter')->generateUrl($route, $params, $ignoreConstraintsFor);
     }
 
@@ -78,7 +78,7 @@ class BaseController {
         return $authenticationManager->getUser();
     }
 
-    public function addBreadcrumb($title, $route, $routeParams = [], $useForBack = true) {
+    public function addBreadcrumb($title, $route, $routeParams = array(), $useForBack = true) {
         $href = $this->generateUrl($route, $routeParams);
         Registry::get('Velox.Extra.Breadcrumbs')->addItem($title, $href, $useForBack);
     }

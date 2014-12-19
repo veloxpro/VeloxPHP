@@ -2,14 +2,14 @@
 namespace Velox\Framework\Event;
 
 class EventManager {
-    protected $listeners = [];
+    protected $listeners = array();
 
     public function registerListener(EventListener $eventListener) {
         $events = $eventListener->getEvents();
 
         foreach ($events as $e) {
             if (!isset($this->listeners[$e]))
-                $this->listeners[$e] = [];
+                $this->listeners[$e] = array();
             $this->listeners[$e][] = $eventListener;
         }
     }

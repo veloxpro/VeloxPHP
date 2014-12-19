@@ -2,7 +2,7 @@
 namespace Velox\Framework\Http;
 
 class ParameterBag {
-    private $parameters = [];
+    private $parameters = array();
 
     public function __construct(array $params = null) {
         if (is_array($params))
@@ -44,7 +44,7 @@ class ParameterBag {
         return (string) $this->get($key, $default);
     }
 
-    public function getArray($key, $default = []) {
+    public function getArray($key, $default = array()) {
         $a = $this->get($key, $default);
         if (!is_array($a))
             $a = $default;

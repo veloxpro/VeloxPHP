@@ -18,7 +18,7 @@ class SimpleDBAdapter extends AbstractAdapter {
     }
 
     public function toStorage(array $arr) {
-        $toReturn = [];
+        $toReturn = array();
     }
 
     public function fromStorage(array $arr) {

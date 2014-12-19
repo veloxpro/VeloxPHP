@@ -5,7 +5,7 @@ class FormField {
     protected $fieldName;
     protected $entityName;
     protected $propertyName;
-    protected $validators = [];
+    protected $validators = array();
 
     public function __construct($fieldName, $entityName = null, $propertyName = null) {
         $this->fieldName = $fieldName;

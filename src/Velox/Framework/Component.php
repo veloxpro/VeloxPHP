@@ -24,7 +24,7 @@ class Component extends BaseComponent {
         $pb->setArray($_GET);
         _dump($pb->getString('tiv'));*/
 
-        return [
+        return array(
             'Velox.Http.Request' => new Service(function() {
                     return Request::createFromGlobals();
                 }),
@@ -44,23 +44,23 @@ class Component extends BaseComponent {
                     $driver->connect($conf['host'], $conf['user'], $conf['password'], $conf['database']);
                     return $driver;
                 }),
-        ];
+        );
     }
 
     public function getRoutes() {
-        return [];
+        return array();
     }
 
     public function getEventListeners() {
-        return [
-            new EventListener(['Velox.Kernel.Launch'], function(Event $event) {
+        return array(
+            new EventListener(array('Velox.Kernel.Launch'), function(Event $event) {
                 //echo 'Fired!';
             }),
-            new EventListener(['Velox.Kernel.Halt'], function(Event $event) {
+            new EventListener(array('Velox.Kernel.Halt'), function(Event $event) {
                 Registry::get('Velox.Http.Response')->send();
                 //echo 'Fired2!';
                 //\Velox\Framework\Kernel\Kernel::halt();
             }),
-        ];
+        );
     }
 }

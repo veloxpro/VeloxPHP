@@ -2,12 +2,12 @@
 namespace Velox\Framework\Http;
 
 class Response {
-    protected $headers = [];
+    protected $headers = array();
     protected $version = '1.1';
     protected $charset = 'UTF-8';
     protected $statusCode;
     protected $content = '';
-    protected $cookies = [];
+    protected $cookies = array();
 
     const HTTP_CONTINUE = 100;
     const HTTP_SWITCHING_PROTOCOLS = 101;
@@ -70,7 +70,7 @@ class Response {
     const HTTP_NOT_EXTENDED = 510;
     const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511;
 
-    public static $statusTexts = [
+    public static $statusTexts = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -131,9 +131,9 @@ class Response {
         508 => 'Loop Detected',
         510 => 'Not Extended',
         511 => 'Network Authentication Required',
-    ];
+    );
 
-    public function __construct($content = '', $status = 200, array $headers=[]) {
+    public function __construct($content = '', $status = 200, array $headers = array()) {
         $this->content = $content;
         $this->statusCode = $status;
         if (!empty($headers))
@@ -173,7 +173,7 @@ class Response {
     }
 
     public function getPreparedHeaders() {
-        $prepared = [sprintf("HTTP/%s %s %s", $this->version, $this->getStatusCode(), $this->getStatusText())];
+        $prepared = array(sprintf("HTTP/%s %s %s", $this->version, $this->getStatusCode(), $this->getStatusText()));
         foreach ($this->headers as $key => $value)
             $prepared[] = $key . ': ' . $value;
         return $prepared;
@@ -266,6 +266,6 @@ class Response {
     }
 
     public function isEmpty() {
-        return in_array($this->statusCode, [204, 304]);
+        return in_array($this->statusCode, array(204, 304));
     }
 }

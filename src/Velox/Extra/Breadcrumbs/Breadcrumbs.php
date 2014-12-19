@@ -3,18 +3,18 @@
 namespace Velox\Extra\Breadcrumbs;
 
 class Breadcrumbs {
-    var $items = [];
+    var $items = array();
 
     public function __construct() {
         $this->addItem('<span class="glyphicon glyphicon-home"></span>', '/', false);
     }
 
     public function addItem($title, $href, $userForBack = true) {
-        $this->items[] = [
+        $this->items[] = array(
             'title' => $title,
             'href' => $href,
             'useForBack' => $userForBack
-        ];
+        );
     }
 
     public function render() {
@@ -23,7 +23,7 @@ class Breadcrumbs {
             $out .= '<li><a href="' . $a['href'] . '">' . $a['title'] . '</a></li>';
 
         $back = '';
-        $backItems = [];
+        $backItems = array();
         foreach ($this->items as $i) {
             if ($i['useForBack'])
                 $backItems[] = $i;

@@ -1,6 +1,8 @@
 <?php
 namespace Velox\Framework\Http;
 
+use Velox\Framework\Http\ParameterBag;
+
 class Request {
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
@@ -32,12 +34,12 @@ class Request {
 
     public static function createFromGlobals() {
         $request = new self();
-        $request->setGet(new \Velox\Framework\Http\ParameterBag($_GET));
-        $request->setPost(new \Velox\Framework\Http\ParameterBag($_POST));
-        $request->setCookie(new \Velox\Framework\Http\ParameterBag($_COOKIE));
-        $request->setSession(new \Velox\Framework\Http\ParameterBag($_SESSION));
-        $request->setServer(new \Velox\Framework\Http\ParameterBag($_SERVER));
-        $request->setFile(new \Velox\Framework\Http\ParameterBag($_FILES));
+        $request->setGet(new ParameterBag($_GET));
+        $request->setPost(new ParameterBag($_POST));
+        $request->setCookie(new ParameterBag($_COOKIE));
+        $request->setSession(new ParameterBag($_SESSION));
+        $request->setServer(new ParameterBag($_SERVER));
+        $request->setFile(new ParameterBag($_FILES));
         return $request;
     }
 

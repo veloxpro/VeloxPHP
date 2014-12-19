@@ -6,13 +6,13 @@ use Velox\Framework\Registry\Registry;
 
 class Template {
     protected $path = null;
-    protected $vars = [];
+    protected $vars = array();
     protected $parent = null;
-    protected $blocks = [];
+    protected $blocks = array();
     protected $content = '';
-    protected $_openBlocks = [];
+    protected $_openBlocks = array();
 
-    public function __construct($path = null, array $vars = []) {
+    public function __construct($path = null, array $vars = array()) {
         if (!is_null($path))
             $this->setPath($path);
         if (!empty($vars))
@@ -36,7 +36,7 @@ class Template {
     }
 
     public function emptyVars() {
-        $this->vars = [];
+        $this->vars = array();
     }
 
     public function getParent() {
@@ -65,7 +65,7 @@ class Template {
             echo $this->blocks[$name];
     }
 
-    public function render($blocks = []) {
+    public function render($blocks = array()) {
         $this->blocks = array_merge($this->blocks, $blocks);
 
         if (!file_exists($this->path))
@@ -82,7 +82,7 @@ class Template {
             return $this->parent->render($this->blocks) . $this->content;
     }
 
-    public function extend($path, $vars = []) {
+    public function extend($path, $vars = array()) {
         $this->setParent(new Template($path, $vars));
     }
 
@@ -107,7 +107,7 @@ class Template {
         return 'http://' . Registry::get('Velox.Http.Request')->server->getString('HTTP_HOST') . $this->uri();
     }
 
-    public function route($name, array $params = [], array $ignoreConstraintsFor = []) {
+    public function route($name, array $params = array(), array $ignoreConstraintsFor = array()) {
         return Registry::get('Velox.HttpRouter')->generateUrl($name, $params, $ignoreConstraintsFor);
     }
 

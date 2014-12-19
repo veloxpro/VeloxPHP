@@ -6,11 +6,11 @@ use Velox\Framework\Http\ParameterBag;
 use Velox\Framework\Http\Request;
 
 class BaseForm {
-    protected $fields = [];
-    protected $entities = [];
-    protected $nonMappedValues = [];
-    protected $validationErrors = [];
-    protected $validators = [];
+    protected $fields = array();
+    protected $entities = array();
+    protected $nonMappedValues = array();
+    protected $validationErrors = array();
+    protected $validators = array();
 
     public function setFields(array $fields) {
         $this->fields = $fields;
@@ -80,7 +80,7 @@ class BaseForm {
 
     public function validate() {
         $isValid = true;
-        $this->validationErrors = [];
+        $this->validationErrors = array();
         foreach ($this->fields as $f) {
             $validators = $f->getValidators();
             foreach ($validators as $validator) {

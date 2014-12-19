@@ -3,7 +3,7 @@ namespace Velox\Framework\Orm;
 
 class ResultCollection implements \Iterator, \Countable, \ArrayAccess {
     private $position = 0;
-    private $cache = [];
+    private $cache = array();
     private $mysqlResource;
     private $repository;
 

@@ -11,7 +11,7 @@ class Join {
     protected $tableName;
     protected $onSql;
     protected $alias;
-    protected $fields = [];
+    protected $fields = array();
 
     public function __construct($tableName, $type, $onSql) {
         $this->setTableName($tableName);

@@ -40,7 +40,7 @@ class Dispatcher {
         if (!method_exists($controllerInstance, $action))
             throw new Exception\ActionNotFoundException(sprintf('Action "%s" of controller %s doesn\'t exists.', $action, $controllerFqn));
 
-        $content = call_user_func([$controllerInstance, $action]);
+        $content = call_user_func(array($controllerInstance, $action));
 
         $eventManager->broadcast(new Event('Velox.Dispatcher.afterDispatch', $this));
         return $content;

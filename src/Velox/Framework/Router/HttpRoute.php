@@ -9,9 +9,9 @@ class HttpRoute {
     private $requirements;
     private $method;
     private $dispatcherFactory;
-    private $matches = [];
+    private $matches = array();
 
-    public function __construct(\Closure $dispatcherFactory, $url, array $requirements = [], $method = null) {
+    public function __construct(\Closure $dispatcherFactory, $url, array $requirements = array(), $method = null) {
         $this->url = $url;
         $this->requirements = $requirements;
         $this->method = $method;
@@ -51,11 +51,11 @@ class HttpRoute {
     }
 
     public function setMatches($matches) {
-        $m = [];
+        $m = array();
         preg_match_all('/\[:([a-zA-Z0-9]+)\]/', $this->url, $m);
         $params = $m[1];
 
-        $this->matches = [];
+        $this->matches = array();
         foreach ($params as $k => $p) {
             if (!isset($matches[$k + 1]))
                 break;
@@ -65,11 +65,11 @@ class HttpRoute {
         return $this->matches;
     }
 
-    public function generateUrl(Request $request, $params = [], array $ignoreConstraintsFor = []) {
-        $queryParams = [];
-        $routeParams = [];
+    public function generateUrl(Request $request, $params = array(), array $ignoreConstraintsFor = array()) {
+        $queryParams = array();
+        $routeParams = array();
 
-        $m = [];
+        $m = array();
         preg_match_all('/\[:([a-zA-Z0-9]+)\]/', $this->url, $m);
         $routeParamNames = $m[1];
         foreach ($params as $k => $v) {
@@ -111,7 +111,7 @@ class HttpRoute {
         }
 
         if (count($queryParams) > 0) {
-            $qs = [];
+            $qs = array();
             foreach ($queryParams as $k => $v) {
                 if (is_array($v)) {
                     foreach ($v as $p)
@@ -158,7 +158,7 @@ class HttpRoute {
             return false;
 
         $regexp = $this->getRegexp();
-        $matches = [];
+        $matches = array();
         $uri = $request->getRequestUri(false);
         $base = $request->server->getString('REDIRECT_BASE');
         if (strlen($base) < 1)

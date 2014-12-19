@@ -9,7 +9,7 @@ abstract class BaseComponent {
     public abstract function getEventListeners();
     //public abstract function getTemplates();
 
-    public function addBreadcrumb($title, $route, $routeParams = [], $userForBack = true) {
+    public function addBreadcrumb($title, $route, $routeParams = array(), $userForBack = true) {
         $href = Registry::get('Velox.HttpRouter')->generateUrl($route, $routeParams);
         Registry::get('Velox.Extra.Breadcrumbs')->addItem($title, $href, $userForBack);
     }

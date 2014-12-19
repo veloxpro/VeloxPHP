@@ -7,12 +7,12 @@ class FlashBag {
 
     public function __construct() {
         if (!isset($_SESSION[$this->sessionKey]))
-            $_SESSION[$this->sessionKey] = [];
+            $_SESSION[$this->sessionKey] = array();
     }
 
     public function addMessage($namespase, $msg) {
         if (!isset($_SESSION[$this->sessionKey][$namespase]))
-            $_SESSION[$this->sessionKey][$namespase] = [];
+            $_SESSION[$this->sessionKey][$namespase] = array();
         $_SESSION[$this->sessionKey][$namespase][] = $msg;
     }
 
@@ -22,10 +22,10 @@ class FlashBag {
 
     public function getMessages($namespace) {
         if (!isset($_SESSION[$this->sessionKey][$namespace]))
-            return [];
+            return array();
 
         $messages = $_SESSION[$this->sessionKey][$namespace];
-        $_SESSION[$this->sessionKey][$namespace] = [];
+        $_SESSION[$this->sessionKey][$namespace] = array();
         return $messages;
     }
 

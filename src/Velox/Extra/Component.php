@@ -9,21 +9,21 @@ use Velox\Framework\Registry\Service;
 
 class Component extends BaseComponent {
     public function getServices() {
-        return [
+        return array(
             'Velox.Extra.FlashBag' => new Service(function() {
                     return new FlashBag();
                 }),
             'Velox.Extra.Breadcrumbs' => new Service(function() {
                     return new Breadcrumbs();
                 })
-        ];
+        );
     }
 
     public function getRoutes() {
-        return [];
+        return array();
     }
 
     public function getEventListeners() {
-        return [];
+        return array();
     }
 }

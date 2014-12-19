@@ -9,9 +9,9 @@ class Mail {
     protected $to;
     protected $body;
     protected $subject;
-    protected $headers = [
+    protected $headers = array(
         'Content-type' => 'text/html; charset=utf-8'
-    ];
+    );
     protected $sandboxMode = true;
 
     public function __construct() {

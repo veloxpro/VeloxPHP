@@ -5,7 +5,7 @@ use Velox\Framework\Persistence\Adapter\AbstractAdapter\AbstractAdapter;
 use Velox\Framework\Persistence\Query\Query;
 
 abstract class Repository {
-    protected $fields = [];
+    protected $fields = array();
     protected $name;
     protected $adapter;
     protected $entityClassFqn;
@@ -54,7 +54,7 @@ abstract class Repository {
     }
 
     public function find(Query $query) {
-        return [];
+        return array();
     }
 
     public function findById($id) {
@@ -87,7 +87,7 @@ abstract class Repository {
     }
 
     protected function toArray($entity, $includeNoUpdate = false, $includeNoInsert = false) {
-        $toReturn = [];
+        $toReturn = array();
         foreach ($this->fields as $f) {
             if (!$includeNoInsert && $f->getNoInsert())
                 continue;

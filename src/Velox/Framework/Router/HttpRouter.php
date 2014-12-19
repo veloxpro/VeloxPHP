@@ -9,7 +9,7 @@ use Velox\Framework\Event\Event;
 use Velox\Framework\Router\Exception\RouteNotFoundException;
 
 class HttpRouter {
-    private $routes = [];
+    private $routes = array();
 
     public function getRoutes() {
         return $this->routes;
@@ -57,7 +57,7 @@ class HttpRouter {
         $eventManager->broadcast(new Event('Velox.Router.afterRespond', $this));
     }
 
-    public function generateUrl($name, $params = [], array $ignoreConstraintsFor = []) {
+    public function generateUrl($name, $params = array(), array $ignoreConstraintsFor = array()) {
         if (!isset($this->routes[$name]))
             throw new RouteNotFoundException(sprintf('Named route "%s" doesn\'t exists', $name));
         $request = Registry::get('Velox.Http.Request');

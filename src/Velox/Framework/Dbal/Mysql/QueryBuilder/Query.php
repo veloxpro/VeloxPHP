@@ -9,9 +9,9 @@ class Query {
     const TYPE_SYS = 5;
 
     protected $type;
-    protected $where = [];
-    protected $fieldPair = [];
-    protected $fromPair = [];
+    protected $where = array();
+    protected $fieldPair = array();
+    protected $fromPair = array();
 
     public function __construct($type) {
         $this->type = $type;
@@ -56,7 +56,7 @@ class Query {
     }
 
     public function getQuery() {
-        $fields = [];
+        $fields = array();
         foreach ($this->fieldPair as $alias => $sql) {
             $s = "$alias";
             if ($sql != $alias)

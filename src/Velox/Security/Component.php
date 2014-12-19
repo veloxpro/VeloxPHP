@@ -13,20 +13,20 @@ use Velox\Security\Authorization\AuthorizationManager;
 
 class Component extends BaseComponent {
     public function getServices() {
-        return [
+        return array(
             'Velox.Security.AuthenticationManager' => new Service(function() {
-                    $config = [
+                    $config = array(
                         'userEntityClass' => 'Velox\\Security\\Authentication\\BaseUser',
-                        'userProvider' => [
+                        'userProvider' => array(
                             'Velox\\Security\\Authentication\\UserProvider\\FileUserProvider',
-                            ['path' => 'app/config/user.config.php']
-                        ],
+                            array('path' => 'app/config/user.config.php')
+                        ),
                         'usernameFormField' => '_username',
                         'passwordFormField' => '_password',
                         'rememberFormField' => '_remember',
                         'rememberExpire' => 360 * 24 * 60 * 60,
                         'salt' => 'T(!AvUFj&,>k{N>4X/{(oDX@+y&gi;?4wo70vN3_1k@/EtV*yY>2Z#DaPEk01 J4',
-                    ];
+                    );
                     $configPath = 'app/config/security.config.php';
                     if (is_readable($configPath)) {
                         $c = include $configPath;
@@ -54,21 +54,21 @@ class Component extends BaseComponent {
             'Velox.Security' => new Service(function() {
                     return new Security();
                 }),
-        ];
+        );
     }
 
     public function getRoutes() {
-        return [];
+        return array();
     }
 
     public function getEventListeners() {
-        return [
-            new EventListener(['Velox.Kernel.Launch'], function(Event $event) {
+        return array(
+            new EventListener(array('Velox.Kernel.Launch'), function(Event $event) {
                 //Registry::get('Velox.Security.AuthenticationManager')->init();
 
                 $security = Registry::get('Velox.Security');
                 $security->execute();
             }),
-        ];
+        );
     }
 }

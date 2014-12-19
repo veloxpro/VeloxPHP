@@ -8,14 +8,14 @@ use Velox\Framework\Registry\Registry;
 class Repository {
     protected $_isConstructed = false;
     protected $dbDriver = null;
-    protected $fields = [];
-    protected $joins = [];
+    protected $fields = array();
+    protected $joins = array();
     protected $entityClass = null;
     protected $tableName = null;
     protected $dumpQueryOnce = false;
     protected $pk;
 
-    public $onlyCountries = [];
+    public $onlyCountries = array();
     public $countryColumn = 'requestCountry';
     public $countryColumnAppendTable = true;
 
@@ -136,18 +136,18 @@ class Repository {
         return $pk;
     }
 
-    public function find(array $config = []) {
+    public function find(array $config = array()) {
         if (!$this->_isConstructed)
             throw new \LogicException('ORM Repository constructor not called!');
 
-        $fields = [];
-        $where = (isset($config['where']) && $config['where'] != '') ? [$config['where']] : [];
-        $having = (isset($config['having']) && $config['having'] != '') ? [$config['having']] : [];
-        $orderBy = (isset($config['orderBy']) && $config['orderBy'] != '') ? [$config['orderBy']] : [];
-        $groupBy = (isset($config['groupBy']) && $config['groupBy'] != '') ? [$config['groupBy']] : [];
+        $fields = array();
+        $where = (isset($config['where']) && $config['where'] != '') ? array($config['where']) : array();
+        $having = (isset($config['having']) && $config['having'] != '') ? array($config['having']) : array();
+        $orderBy = (isset($config['orderBy']) && $config['orderBy'] != '') ? array($config['orderBy']) : array();
+        $groupBy = (isset($config['groupBy']) && $config['groupBy'] != '') ? array($config['groupBy']) : array();
         $startCount = isset($config['startCount']) ? $config['startCount'] : null;
         $limitCount = isset($config['limitCount']) ? $config['limitCount'] : null;
-        $from = ['`' . $this->getTableName() . '`'];
+        $from = array('`' . $this->getTableName() . '`');
 
         foreach ($this->joins as $j)
             $from[] = $j->getSql();
@@ -182,14 +182,14 @@ class Repository {
 
     public function findByPk($val) {
         $pk = $this->getPk();
-        return $this->findOne(['where' => '[$'.$pk->getPropName().']=[escape('.$val.')]']);
+        return $this->findOne(array('where' => '[$'.$pk->getPropName().']=[escape('.$val.')]'));
     }
 
     public function findWhere($whereSql) {
-        return $this->find(['where' => $whereSql]);
+        return $this->find(array('where' => $whereSql));
     }
 
-    public function findOne(array $config = []) {
+    public function findOne(array $config = array()) {
         if (!isset($config['startCount']) && !isset($config['limitCount'])) {
             $config['startCount'] = 0;
             $config['limitCount'] = 1;
@@ -200,7 +200,7 @@ class Repository {
 
     public function delete($entity, $broadcastEvents = true) {
         if (is_null($entity))
-            return;
+            return null;
         $pk = $this->getPk();
         if (is_null($pk))
             throw new \LogicException(sprintf('Trying to delete entity "%s" with no Primary Key defined', $this->getEntityClass()));
@@ -276,8 +276,8 @@ class Repository {
 
         $a = $this->castToDbArray($entity);
 
-        $fieldsSql = [];
-        $valuesSql = [];
+        $fieldsSql = array();
+        $valuesSql = array();
         foreach ($this->fields as $f) {
             if ($f->isNoInsert())
                 continue;
@@ -333,7 +333,7 @@ class Repository {
 
         // broadcast event
 
-        $assignments = [];
+        $assignments = array();
         foreach ($this->fields as $f) {
             if ($f->isNoUpdate())
                 continue;
@@ -401,10 +401,11 @@ class Repository {
     }
 
     public function prepare($q) {
-        $q = preg_replace_callback('|\[([a-zA-Z0-9-_]+)\(([^[]+)?\)\]|', function($m) {
+        $self = $this;
+        $q = preg_replace_callback('|\[([a-zA-Z0-9-_]+)\(([^[]+)?\)\]|', function($m) use ($self) {
             switch ($m[1]) {
                 case 'escape':
-                    return $this->dbDriver->escape(isset($m[2]) ? $m[2] : '');
+                    return $self->dbDriver->escape(isset($m[2]) ? $m[2] : '');
                 case 'int':
                     return (int) (isset($m[2]) ? $m[2] : 0);
                 case 'float':
@@ -415,12 +416,12 @@ class Repository {
                     return null;
             }
         }, $q);
-        $q = preg_replace_callback('|\[\$([a-zA-Z0-9-_]+)\]|', function($m) {
+        $q = preg_replace_callback('|\[\$([a-zA-Z0-9-_]+)\]|', function($m) use ($self) {
             switch ($m[1]) {
                 case '_tableName':
-                    return $this->tableName;
+                    return $self->tableName;
                 default:
-                    return $this->getSqlByPropName($m[1]);
+                    return $self->getSqlByPropName($m[1]);
             }
         }, $q);
         return $q;
@@ -469,7 +470,7 @@ class Repository {
                         $o->$setter((int) $a[$propName]);
                         break;
                     case Field::TYPE_ARR :
-                        $o->$setter(empty($a[$propName]) ? [] : json_decode($a[$propName], true));
+                        $o->$setter(empty($a[$propName]) ? array() : json_decode($a[$propName], true));
                         break;
                     case Field::TYPE_OBJ :
                         $o->$setter(empty($a[$propName]) ? null : json_decode($a[$propName], false));
@@ -490,7 +491,7 @@ class Repository {
             throw new \LogicException(sprintf('Repository "%s" can update only instances of "%s"',
                 get_called_class(), $entityClass));
         }
-        $a = [];
+        $a = array();
         foreach ($this->fields as $f) {
             $propName = $f->getPropName();
             $getter = 'get'.ucfirst($propName);

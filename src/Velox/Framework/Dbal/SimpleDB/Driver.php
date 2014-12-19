@@ -61,7 +61,7 @@ class Driver {
     }
 
     public function listDomains($maxNumber = null, $nextToken = null) {
-        $params = ['Action' => 'ListDomains'];
+        $params = array('Action' => 'ListDomains');
         if ($maxNumber !== null)
             $params['MaxNumberOfDomains'] = $maxNumber;
         if ($nextToken !== null)
@@ -71,7 +71,7 @@ class Driver {
             $this->nextToken = (String) $xml->ListDomainsResult->NextToken;
         }
 
-        $domains = [];
+        $domains = array();
         foreach ($xml->ListDomainsResult->DomainName as $domain)
             $domains[] = (String) $domain;
         return $domains;
@@ -80,33 +80,33 @@ class Driver {
     public function createDomain($name) {
         if (!preg_match('/^[a-zA-Z0-9-_\.]{3,255}$/', $name))
             throw new Exception\QueryFailedException("Wrong domain name");
-        $params = [
+        $params = array(
             'Action' => 'CreateDomain',
             'DomainName' => $name,
-        ];
+        );
         $this->request($params);
     }
 
     public function deleteDomain($name) {
         if (!preg_match('/^[a-zA-Z0-9-_\.]{3,255}$/', $name))
             throw new Exception\QueryFailedException("Wrong domain name");
-        $params = [
+        $params = array(
             'Action' => 'DeleteDomain',
             'DomainName' => $name,
-        ];
+        );
         $this->request($params);
     }
 
     public function domainMetadata($name) {
         if (!preg_match('/^[a-zA-Z0-9-_\.]{3,255}$/', $name))
             throw new Exception\QueryFailedException("Wrong domain name");
-        $params = [
+        $params = array(
             'Action' => 'DomainMetadata',
             'DomainName' => $name,
-        ];
+        );
         $xml = $this->request($params);
 
-        $toReturn = [];
+        $toReturn = array();
         $toReturn['ItemCount'] = (String) $xml->DomainMetadataResult->ItemCount;
         $toReturn['ItemNamesSizeBytes'] = (String) $xml->DomainMetadataResult->ItemNamesSizeBytes;
         $toReturn['AttributeNameCount'] = (String) $xml->DomainMetadataResult->AttributeNameCount;
@@ -118,11 +118,11 @@ class Driver {
     }
 
     public function putAttributes($domainName, $itemName, array $keyValuePairs, $isReplace = true) {
-        $params = [
+        $params = array(
             'Action' => 'PutAttributes',
             'DomainName' => $domainName,
             'ItemName' => $itemName,
-        ];
+        );
         $i = 0;
         foreach ($keyValuePairs as $k => $v) {
             $i++;
@@ -133,25 +133,25 @@ class Driver {
     }
 
     public function getAttributes($domainName, $itemName) {
-        $params = [
+        $params = array(
             'Action' => 'GetAttributes',
             'DomainName' => $domainName,
             'ItemName' => $itemName,
-        ];
+        );
         $xml = $this->request($params);
 
-        $toReturn = [];
+        $toReturn = array();
         foreach ($xml->GetAttributesResult->Attribute as $a)
             $toReturn[(String) $a->Name] = (String) $a->Value;
         return $toReturn;
     }
 
-    public function deleteAttributes($domainName, $itemName, array $keyValuePairs = []) {
-        $params = [
+    public function deleteAttributes($domainName, $itemName, array $keyValuePairs = array()) {
+        $params = array(
             'Action' => 'DeleteAttributes',
             'DomainName' => $domainName,
             'ItemName' => $itemName,
-        ];
+        );
 
         foreach ($keyValuePairs as $k => $v)
             $params['Attribute.' . $k . '.Name'] = $v;
@@ -160,15 +160,15 @@ class Driver {
     }
 
     public function select($expression) {
-        $params = [
+        $params = array(
             'Action' => 'Select',
             'SelectExpression' => $expression
-        ];
+        );
         $xml = $this->request($params);
 
-        $toReturn = [];
+        $toReturn = array();
         foreach ($xml->SelectResult->Item as $item) {
-            $i = [];
+            $i = array();
             foreach ($item->Attribute as $a) {
                 $i[(String) $a->Name] = (String) $a->Value;
             }

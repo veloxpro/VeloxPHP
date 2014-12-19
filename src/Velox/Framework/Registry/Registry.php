@@ -3,7 +3,7 @@ namespace Velox\Framework\Registry;
 
 class Registry
 {
-    private static $registry = [];
+    private static $registry = array();
 
     public static function get($name) {
         if (!isset(self::$registry[$name]))
