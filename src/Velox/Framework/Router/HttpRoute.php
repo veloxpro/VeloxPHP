@@ -166,6 +166,8 @@ class HttpRoute {
         else
             $uri = '/' . substr($uri, strlen($base));
 
+        $uri = preg_replace('#/+#', '/', $uri);
+
         if (preg_match($regexp, $uri, $matches)) {
             $this->setMatches($matches);
             return true;
