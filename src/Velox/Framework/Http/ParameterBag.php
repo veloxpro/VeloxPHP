@@ -17,6 +17,10 @@ class ParameterBag {
         $this->parameters = array_replace($this->parameters, $parameters);
     }
 
+    public function all() {
+        return $this->parameters;
+    }
+
     public function has($key) {
         return isset($this->parameters[$key]);
     }

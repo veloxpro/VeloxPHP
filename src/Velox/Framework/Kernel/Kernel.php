@@ -18,7 +18,7 @@ class Kernel {
 
         if (!class_exists('Velox\Framework\Kernel\SplClassLoader'))
             require(__DIR__ . '/SplClassLoader.php');
-        self::autoloadFromFolder('lib');
+        self::autoloadFromFolder('../vendor/veloxpro/VeloxPHP/src');
         self::autoloadFromFolder('src');
 
         Registry::set('Velox.ComponentManager', new Service(function() {
