@@ -3,7 +3,8 @@ namespace Velox\Framework\Http;
 
 use Velox\Framework\Http\ParameterBag;
 
-class Request {
+class Request
+{
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
     const METHOD_PUT = 'PUT';
@@ -32,7 +33,8 @@ class Request {
     /** @var  ParameterBag */
     public $route;
 
-    public static function createFromGlobals() {
+    public static function createFromGlobals()
+    {
         $request = new self();
         $request->setGet(new ParameterBag($_GET));
         $request->setPost(new ParameterBag($_POST));
@@ -43,48 +45,70 @@ class Request {
         return $request;
     }
 
-    public function setGet(ParameterBag $get = null) {
+    public function setGet(ParameterBag $get = null)
+    {
         $this->get = is_null($get) ? new ParameterBag() : $get;
     }
 
-    public function setPost(ParameterBag $post = null) {
+    public function setPost(ParameterBag $post = null)
+    {
         $this->post = is_null($post) ? new ParameterBag() : $post;
     }
 
-    public function setCookie(ParameterBag $cookie = null) {
+    public function setCookie(ParameterBag $cookie = null)
+    {
         $this->cookie = is_null($cookie) ? new ParameterBag() : $cookie;
     }
 
-    public function setFile(ParameterBag $file = null) {
+    public function setFile(ParameterBag $file = null)
+    {
         $this->file = is_null($file) ? new ParameterBag() : $file;
     }
 
-    public function setServer(ParameterBag $server = null) {
+    public function setServer(ParameterBag $server = null)
+    {
         $this->server = is_null($server) ? new ParameterBag() : $server;
     }
 
-    public function setSession(ParameterBag $session = null) {
+    public function setSession(ParameterBag $session = null)
+    {
         $this->session = is_null($session) ? new ParameterBag() : $session;
     }
 
-    public function setRoute(ParameterBag $route = null) {
+    public function setRoute(ParameterBag $route = null)
+    {
         $this->route = is_null($route) ? new ParameterBag() : $route;
     }
 
-    public function getMethod() {
+    public function getMethod()
+    {
         return strtoupper($this->server->getString('REQUEST_METHOD'));
     }
 
-    public function getRequestUri($withQueryString = true) {
+    public function getRequestUri($withQueryString = true)
+    {
         $uri = $this->server->getString('REQUEST_URI');
         $qs = $this->server->getString('QUERY_STRING');
         if ($withQueryString || $qs == '')
             return $uri;
-        return substr($uri, 0, strrpos($uri, '?'.$qs));
+        return substr($uri, 0, strrpos($uri, '?' . $qs));
     }
 
-    public function getBaseUrl() {
+    public function getBaseUrl()
+    {
         $scriptName = $this->server->getString('SCRIPT_NAME');
-        return 'http://' . $this->server->getString('HTTP_HOST') . dirname($scriptName) . '/';
+        return $this->getScheme() . '://' . $this->server->getString('HTTP_HOST') . dirname($scriptName) . '/';
+    }
+
+    public function getScheme()
+    {
+        $configFile = 'config/app.config.php';
+        if (is_readable($configFile)) {
+            $config = include $configFile;
+            if (isset($config['enforce_ssl']) && $config['enforce_ssl']) {
+                return 'https';
+            }
+        }
+        return $this->server->getString('REQUEST_SCHEME', 'http');
     }
 }
